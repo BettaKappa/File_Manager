@@ -116,6 +116,15 @@ namespace Norton_Commander
                     ImitateSpasebarPress();
                     ShowDriveInfo();
                     break;
+                case F1:
+                    AddDir();
+                    break;
+                case F2:
+                    AddFile();
+                    break;
+                case F3:
+                    Delete();
+                    break;
                 case Escape:
                     Clear();
                     WriteLine("Вы вышли" + "\n" + "САМ ТЫ Ы");
@@ -133,6 +142,21 @@ namespace Norton_Commander
         {
             InputSimulator spacebar = new();
             spacebar.Keyboard.KeyPress(VirtualKeyCode.SPACE);
+        }
+
+        static void AddFile()
+        {
+
+        }
+
+        static void AddDir()
+        {
+
+        }
+
+        static void Delete()
+        {
+
         }
     } 
 }
