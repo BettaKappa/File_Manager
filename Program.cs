@@ -8,7 +8,8 @@ using Process = System.Diagnostics.Process;
 namespace Norton_Commander
 {
     internal class Program
-    {
+    { 
+        static string Path;
         static int position = 2;
         static void Main()
         {
@@ -44,10 +45,11 @@ namespace Norton_Commander
 
             Clear();
             ImitateSpasebarPress();
-            ShowDirectoryContent(allDrives[position - 2].Name);
+            Path = allDrives[position - 2].Name;
+            ShowDirectoryContent();
         }
 
-        static void ShowDirectoryContent(string Path)    
+        static void ShowDirectoryContent()    
         {
             position = 2;
             WriteLine("   " + "File Name" + "\t\t\t   " + "Last Write Time");
@@ -89,17 +91,20 @@ namespace Norton_Commander
 
                 key = Arrow(key, ref position);
             }
-
+        
             Clear();
             ImitateSpasebarPress();
             if (position < allDirectories.Length + 2)
             {
-                ShowDirectoryContent(allDirectories[position - 2]);
+                Path = allDirectories[position - 2];
+                ShowDirectoryContent();
             }
             else
             {
                 Process.Start(new ProcessStartInfo {FileName = allFiles[position - (allDirectories.Length + 2)], UseShellExecute = true });
             }
+
+            
         }
 
         private static ConsoleKeyInfo Arrow(ConsoleKeyInfo key, ref int position)
@@ -123,7 +128,7 @@ namespace Norton_Commander
                     AddFile();
                     break;
                 case F3:
-                    Delete();
+                    //DeleteDir(allFiles);
                     break;
                 case Escape:
                     Clear();
@@ -144,19 +149,39 @@ namespace Norton_Commander
             spacebar.Keyboard.KeyPress(VirtualKeyCode.SPACE);
         }
 
-        static void AddFile()
-        {
-
-        }
-
         static void AddDir()
         {
-
+            SetCursorPosition(65, 5);
+            WriteLine("Folder name: \n");
+            SetCursorPosition(65, 6);
+            string name = ReadLine();
+            string path = Path + "\\" + name;
+            Directory.CreateDirectory(path);
+            Clear();
+            ShowDirectoryContent();
         }
 
-        static void Delete()
+        static void AddFile()
         {
+            SetCursorPosition(65, 5);
+            WriteLine("File name: \n");
+            SetCursorPosition(65, 6);
+            string name = ReadLine();
+            string path = Path + "\\" + name;
+            File.Create(path);
+            Clear();
+            ShowDirectoryContent();
+        }
 
+        private static void DeleteDir(string[] allFiles)
+        {
+            SetCursorPosition(65, 5);
+            WriteLine("Напишите 'Да', если вы уверены," + "\n" + " что хотите удалить этот файл");
+            string answer = ReadLine();
+            if (answer == "Да")
+            {
+                Directory.Delete(allFiles[position - 2]);
+            }
         }
     } 
 }
