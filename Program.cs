@@ -103,8 +103,6 @@ namespace Norton_Commander
             {
                 Process.Start(new ProcessStartInfo {FileName = allFiles[position - (allDirectories.Length + 2)], UseShellExecute = true });
             }
-
-            
         }
 
         private static ConsoleKeyInfo Arrow(ConsoleKeyInfo key, ref int position)
@@ -173,15 +171,15 @@ namespace Norton_Commander
             ShowDirectoryContent();
         }
 
-        private static void DeleteDir(string[] allFiles)
+        /*private static void DeleteDir()
         {
             SetCursorPosition(65, 5);
             WriteLine("Напишите 'Да', если вы уверены," + "\n" + " что хотите удалить этот файл");
             string answer = ReadLine();
             if (answer == "Да")
             {
-                Directory.Delete(allFiles[position - 2]);
+                Directory.Delete();
             }
-        }
+        }*/
     } 
 }
